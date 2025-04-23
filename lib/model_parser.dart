@@ -21,14 +21,14 @@ class ModelField {
     return type;
   }
 
-  getTypeOfList() {
+  String getTypeOfList() {
     if (getType().contains('List')) {
       return getType().replaceAll('List<', '').replaceAll('>', '');
     }
     return getType();
   }
 
-  typeConvert() {
+  String typeConvert() {
     if (isListOfPrimitives()) {
       return "json['${jsonKey ?? name}'] != null ? ${getType()}.from(json['${jsonKey ?? name}']) : [],";
     }

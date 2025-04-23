@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_yaml_to_dart/generators/generator.dart';
@@ -8,7 +9,7 @@ import 'package:yaml/yaml.dart';
 void main(List<String> arguments) {
   final configFile = File('flutter_data.yaml');
   if (!configFile.existsSync()) {
-    print('❌ flutter_data.yaml file not found in the current directory');
+    log('❌ flutter_data.yaml file not found in the current directory');
     return;
   }
 
@@ -16,7 +17,7 @@ void main(List<String> arguments) {
   final configMap = loadYaml(configContent);
 
   if (configMap['models'] == null || configMap['models'] is! YamlList || configMap['models'].isEmpty) {
-    print('❌ No models configuration found in flutter_data.yaml');
+    log('❌ No models configuration found in flutter_data.yaml');
     return;
   }
 
@@ -34,6 +35,6 @@ void readYamlModels(String folderPath) {
     final outFile = File('$folderPath/${model.className.toLowerCase()}.dart');
     outFile.createSync(recursive: true);
     outFile.writeAsStringSync(dartCode);
-    print('✅ Generated ${outFile.path}');
+    log('✅ Generated ${outFile.path}');
   }
 }
