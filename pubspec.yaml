@@ -4,6 +4,8 @@ version: 0.0.2
 homepage: https://github.com/babakoto/flutter_yaml_to_dart
 # repository: https://github.com/my_org/my_repo
 
+executables:
+  yaml_dart:
 environment:
   sdk: ^3.7.2
 
