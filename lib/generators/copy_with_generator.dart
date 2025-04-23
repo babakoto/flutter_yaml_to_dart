@@ -1,5 +1,4 @@
-
-import 'package:flutter_yaml_to_dart/model_parser.dart';
+import '../model_parser.dart';
 
 void copyWithGenerator(StringBuffer buffer, ModelDefinition model) {
   if (model.copyWith) {

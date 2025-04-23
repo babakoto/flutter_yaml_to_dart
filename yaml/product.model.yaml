@@ -1,0 +1,8 @@
+class: Product
+fields:
+  - id: String
+  - price: double
+  - images: List<String>
+  - createdAt: DateTime?
+    key: "created_at"
+

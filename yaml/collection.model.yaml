@@ -1,0 +1,7 @@
+class: Collection
+fields:
+  - id: String
+  - title: String
+  - description: String?
+  - createdAt: DateTime
+    key: "created_at"

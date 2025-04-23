@@ -2,7 +2,7 @@ import '../model_parser.dart';
 import 'constructor_generator.dart';
 import 'copy_with_generator.dart';
 import 'equatable_generator.dart';
-import 'fromMap_generator.dart';
+import 'from_map_generator.dart';
 import 'import_file_generator.dart';
 import 'tomap_generator.dart';
 
@@ -17,13 +17,13 @@ String generateClass(ModelDefinition model) {
   buffer.writeln();
 
   /// Import the necessary files (class,enums,...)
-  importObjects(buffer, model);
+  importDependencies(buffer, model);
 
   buffer.writeln();
 
   buffer.writeln('class ${model.className} ${isEquatable ? "extends Equatable {" : "{"}');
 
-  // generate fields
+  /// generate fields
   for (var field in model.fields) {
     buffer.writeln('  final ${field.type} ${field.name};');
   }

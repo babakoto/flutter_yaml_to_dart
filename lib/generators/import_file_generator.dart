@@ -1,6 +1,6 @@
 import '../model_parser.dart';
 
-void importObjects(StringBuffer buffer, ModelDefinition model) {
+void importDependencies(StringBuffer buffer, ModelDefinition model) {
   Set<String> dependencies = {};
   for (var field in model.fields) {
     if (field.isObjectOrListOfObject()) {
