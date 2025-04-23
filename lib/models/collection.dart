@@ -5,21 +5,18 @@ import 'package:equatable/equatable.dart';
 class Collection extends Equatable {
   final String id;
   final String title;
-  final String? description;
   final DateTime createdAt;
 
   const Collection({
-   required this.id,
-   required this.title,
-    this.description,
-   required this.createdAt,
+    required this.id,
+    required this.title,
+    required this.createdAt,
   });
 
   factory Collection.fromMap(Map<String, dynamic> json) {
     return Collection(
       id: json['id'],
       title: json['title'],
-      description: json['description'],
       createdAt: DateTime.parse(json['created_at']),
     );
   }
@@ -28,7 +25,6 @@ class Collection extends Equatable {
   List<Object?> get props => [
     id,
     title,
-    description,
     createdAt,
   ];
 }

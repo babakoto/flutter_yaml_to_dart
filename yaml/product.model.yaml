@@ -2,6 +2,9 @@ class: Product
 fields:
   - id: String
   - price: double
+    default: 0.0
+  - description: String?
+  - counts: List<int>
   - images: List<String>
   - createdAt: DateTime?
     key: "created_at"

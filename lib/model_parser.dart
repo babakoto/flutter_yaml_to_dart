@@ -6,12 +6,19 @@ class ModelField {
   final String name;
   final String type;
   final String? jsonKey;
+  final String? defaultValue;
   final bool isEnum;
 
-  ModelField(this.name, this.type, {this.jsonKey, this.isEnum = false});
+  ModelField(this.name, this.type, {this.jsonKey, this.isEnum = false, this.defaultValue});
 
   bool isRequired() {
     return !type.contains('?');
+  }
+
+  bool get isOptional => !isRequired();
+
+  bool hasDefaultValue() {
+    return defaultValue != null;
   }
 
   String getType() {
@@ -150,8 +157,9 @@ ModelDefinition parseModelFile(File file) {
 
       // Check if there’s a "key" or "name" (JSON key override)
       final jsonKey = item['key']?.toString() ?? dartName;
+      final String? defaultValue = item['default']?.toString();
 
-      fields.add(ModelField(dartName, dartType, jsonKey: jsonKey));
+      fields.add(ModelField(dartName, dartType, jsonKey: jsonKey, defaultValue: defaultValue));
     } else {
       throw FormatException('Invalid field format: $item');
     }
