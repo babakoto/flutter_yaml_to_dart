@@ -2,14 +2,16 @@ import 'dart:io';
 
 import 'package:yaml/yaml.dart';
 
+import 'utils.dart';
+
 class ModelField {
   final String name;
   final String type;
   final String? jsonKey;
   final String? defaultValue;
-  final bool isEnum;
+  final List<String> enumValues;
 
-  ModelField(this.name, this.type, {this.jsonKey, this.isEnum = false, this.defaultValue});
+  ModelField(this.name, this.type, {this.jsonKey, this.defaultValue, this.enumValues = const []});
 
   bool isRequired() {
     return !type.contains('?');
@@ -20,6 +22,8 @@ class ModelField {
   bool hasDefaultValue() {
     return defaultValue != null;
   }
+
+  bool get isEnum => enumValues.isNotEmpty && type == 'enum';
 
   String getType() {
     if (type.contains('?')) {
@@ -59,6 +63,13 @@ class ModelField {
         } else {
           return "int.parse(json['${jsonKey ?? name}']),";
         }
+      case 'enum':
+        if (type.contains('?')) {
+          return "json['${jsonKey ?? name}'] != null ? ${name.capitalize()}.fromMap(json['${jsonKey ?? name}']) : null,";
+        } else {
+          return "${name.capitalize()}.fromMap(json['${jsonKey ?? name}']),";
+        }
+
       case 'double':
         if (type.contains('?')) {
           return "json['${jsonKey ?? name}'] != null ? double.parse(json['${jsonKey ?? name}']) : null,";
@@ -100,7 +111,8 @@ class ModelField {
         getType() == 'double' ||
         getType() == 'String' ||
         getType() == 'bool' ||
-        getType() == 'DateTime';
+        getType() == 'DateTime' ||
+        getType() == 'enum';
   }
 
   bool isObjectOrListOfObject() {
@@ -158,8 +170,22 @@ ModelDefinition parseModelFile(File file) {
       // Check if there’s a "key" or "name" (JSON key override)
       final jsonKey = item['key']?.toString() ?? dartName;
       final String? defaultValue = item['default']?.toString();
+      List<String> enumValues = [];
 
-      fields.add(ModelField(dartName, dartType, jsonKey: jsonKey, defaultValue: defaultValue));
+      if (dartType == 'enum' && item['values'] == null) {
+        throw const FormatException("""
+ Invalid Enum format : Define enum values in the yaml file
+          Example:
+            - status: enum
+              values: ['value1', 'value2', 'value3']
+          """);
+      }
+
+      if (dartType == 'enum' && (item['values'] as YamlList).isNotEmpty) {
+        enumValues = (item['values'] as YamlList).map((e) => e.toString()).toList();
+      }
+
+      fields.add(ModelField(dartName, dartType, jsonKey: jsonKey, defaultValue: defaultValue, enumValues: enumValues));
     } else {
       throw FormatException('Invalid field format: $item');
     }
@@ -174,4 +200,11 @@ ModelDefinition parseModelFile(File file) {
     fromMap: yaml['fromMap'] ?? true,
     toMap: yaml['toMap'] ?? false,
   );
+}
+
+class EnumField {
+  final String name;
+  final List<String> values;
+
+  EnumField(this.name, this.values);
 }

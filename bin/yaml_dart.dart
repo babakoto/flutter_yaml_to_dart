@@ -31,7 +31,7 @@ void readYamlModels(String folderPath) {
   final files = findModelFiles(Directory.current.path);
   for (final file in files) {
     final model = parseModelFile(file);
-    final dartCode = generateClass(model);
+    final dartCode = generateClass(model, folderPath);
     final outFile = File('$folderPath/${model.className.toLowerCase()}.dart');
     outFile.createSync(recursive: true);
     outFile.writeAsStringSync(dartCode);

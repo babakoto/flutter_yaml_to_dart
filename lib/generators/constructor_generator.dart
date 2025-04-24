@@ -9,7 +9,6 @@ void constructorGenerator(StringBuffer buffer, ModelDefinition model) {
       } else {
         if (field.isOptional || field.hasDefaultValue()) {
           if (field.hasDefaultValue()) {
-            print('Default value for ${field.name} is ${field.defaultValue}');
             buffer.writeln('    this.${field.name} = ${field.defaultValue!.isEmpty ? "''" : field.defaultValue},');
           } else {
             buffer.writeln('    this.${field.name},');

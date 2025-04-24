@@ -1,4 +1,5 @@
-// This is an auto-generated file. Do not edit.
+// ⚠️ This file is auto-generated. Do not edit.
+
 import 'package:equatable/equatable.dart';
 
 

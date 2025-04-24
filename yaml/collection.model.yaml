@@ -2,5 +2,8 @@ class: Collection
 fields:
   - id: String
   - title: String
+  - status: enum
+    values: ['active_file', 'inactive_file', 'archived_file', 'deleted_file']
+    key: "status_file"
   - createdAt: DateTime
     key: "created_at"
