@@ -5,3 +5,8 @@ fields:
   - description: String?
   - createdAt: DateTime
     key: "created_at"
+
+
+
+toMap: true
+copyWith: true

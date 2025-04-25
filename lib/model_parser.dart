@@ -23,7 +23,7 @@ class ModelField {
     return defaultValue != null;
   }
 
-  bool get isEnum => enumValues.isNotEmpty && type == 'enum';
+  bool get isEnum => enumValues.isNotEmpty && (type == 'enum' || type == 'enum?');
 
   String getType() {
     if (type.contains('?')) {
@@ -59,30 +59,36 @@ class ModelField {
     switch (getType()) {
       case 'int':
         if (type.contains('?')) {
-          return "json['${jsonKey ?? name}'] != null ? int.parse(json['${jsonKey ?? name}']) : null,";
+          return "json['${jsonKey ?? name}'] != null ? int.parse(json['${jsonKey ?? name}']) : $defaultValue,";
         } else {
           return "int.parse(json['${jsonKey ?? name}']),";
         }
       case 'enum':
         if (type.contains('?')) {
-          return "json['${jsonKey ?? name}'] != null ? ${name.capitalize()}.fromMap(json['${jsonKey ?? name}']) : null,";
+          return "json['${jsonKey ?? name}'] != null ? ${name.capitalize()}.fromMap(json['${jsonKey ?? name}']) : ${name.capitalize()}.${defaultValue?.toVariableCamelCase()},";
         } else {
           return "${name.capitalize()}.fromMap(json['${jsonKey ?? name}']),";
         }
 
       case 'double':
         if (type.contains('?')) {
-          return "json['${jsonKey ?? name}'] != null ? double.parse(json['${jsonKey ?? name}']) : null,";
+          return "json['${jsonKey ?? name}'] != null ? double.parse(json['${jsonKey ?? name}']) : $defaultValue,";
         } else {
           return "double.parse(json['${jsonKey ?? name}']),";
         }
+
       case 'String':
         return "json['${jsonKey ?? name}'],";
+
       case 'bool':
-        return 'bool';
+        if (type.contains('?')) {
+          return "json['${jsonKey ?? name}'] ?? $defaultValue,";
+        } else {
+          return "json['${jsonKey ?? name}'],";
+        }
       case 'DateTime':
         if (type.contains('?')) {
-          return "json['${jsonKey ?? name}'] != null ? DateTime.parse(json['${jsonKey ?? name}']) : null,";
+          return "json['${jsonKey ?? name}'] != null ? DateTime.parse(json['${jsonKey ?? name}']) : $defaultValue,";
         } else {
           return "DateTime.parse(json['${jsonKey ?? name}']),";
         }
@@ -172,7 +178,7 @@ ModelDefinition parseModelFile(File file) {
       final String? defaultValue = item['default']?.toString();
       List<String> enumValues = [];
 
-      if (dartType == 'enum' && item['values'] == null) {
+      if ((dartType == 'enum' || dartType == 'enum?') && item['values'] == null) {
         throw const FormatException("""
  Invalid Enum format : Define enum values in the yaml file
           Example:
@@ -181,7 +187,7 @@ ModelDefinition parseModelFile(File file) {
           """);
       }
 
-      if (dartType == 'enum' && (item['values'] as YamlList).isNotEmpty) {
+      if ((dartType == 'enum' || dartType == 'enum?') && (item['values'] as YamlList).isNotEmpty) {
         enumValues = (item['values'] as YamlList).map((e) => e.toString()).toList();
       }
 

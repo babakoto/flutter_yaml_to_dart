@@ -24,4 +24,20 @@ extension StringExtension on String {
       return match.group(0)!.replaceFirst('_', '').toUpperCase();
     }).capitalize();
   }
+
+  /// Extracts the type from a string.
+  /// For example:
+  /// - "List<Object>" will return "object"
+  /// - "Object" will return "object"
+  /// - "List<String>" will return "string"
+  String extractType() {
+    final regex = RegExp(r'List<(\w+)>');
+    final match = regex.firstMatch(this);
+
+    if (match != null) {
+      return match.group(1)!.toLowerCase(); // Cas "List<Object>"
+    } else {
+      return toLowerCase(); // Cas "Object"
+    }
+  }
 }

@@ -1,4 +1,5 @@
 import '../model_parser.dart';
+import '../utils.dart';
 
 void constructorGenerator(StringBuffer buffer, ModelDefinition model) {
   if (model.constructor) {
@@ -9,7 +10,13 @@ void constructorGenerator(StringBuffer buffer, ModelDefinition model) {
       } else {
         if (field.isOptional || field.hasDefaultValue()) {
           if (field.hasDefaultValue()) {
-            buffer.writeln('    this.${field.name} = ${field.defaultValue!.isEmpty ? "''" : field.defaultValue},');
+            if (field.isEnum) {
+              buffer.writeln(
+                '    this.${field.name} = ${field.name.capitalize()}.${field.defaultValue!.toVariableCamelCase()},',
+              );
+            } else {
+              buffer.writeln('    this.${field.name} = ${field.defaultValue!.isEmpty ? "''" : field.defaultValue},');
+            }
           } else {
             buffer.writeln('    this.${field.name},');
           }

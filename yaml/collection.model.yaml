@@ -1,12 +1,18 @@
 class: Collection
 fields:
   - id: String
-  - title: String
+  - title: String?
+    default: ''
   - counts: int
     default: 0
-  - status: enum
+  - product: Product
+  - isActive: bool?
+    default: false
+  - products: List<Product>
+  - status: enum?
     values: ['active_file', 'inactive_file', 'archived_file', 'deleted_file']
     key: "status_file"
+    default: inactive_file
   - createdAt: DateTime
     key: "created_at"
 
