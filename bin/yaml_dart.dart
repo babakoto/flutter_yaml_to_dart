@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_yaml_to_dart/generators/generator.dart';
@@ -7,34 +6,53 @@ import 'package:flutter_yaml_to_dart/utils.dart';
 import 'package:yaml/yaml.dart';
 
 void main(List<String> arguments) {
-  final configFile = File('flutter_data.yaml');
-  if (!configFile.existsSync()) {
-    log('❌ flutter_data.yaml file not found in the current directory');
-    return;
+  if (arguments.isEmpty) {
+    throw Exception('❌ No arguments provided');
+  } else {
+    final configFile = File('yaml_to_dart.yaml');
+
+    if (arguments[0] == 'init') {
+      /// Initialize the project
+      /// Create file flutter_data.yaml
+      '🚀 Initializing project ...'.log();
+      configFile.createSync();
+      StringBuffer buffer = StringBuffer();
+      buffer.writeln('models:');
+      buffer.writeln('  - output: lib/models');
+      configFile.writeAsStringSync(buffer.toString());
+      '✅ Created yaml_to_dart.yaml file '.log();
+    }
+    if (arguments[0] == 'generate') {
+      if (!configFile.existsSync()) {
+        throw Exception('❌ flutter_data.yaml file not found in the current directory');
+        return;
+      }
+
+      final configContent = configFile.readAsStringSync();
+      final configMap = loadYaml(configContent);
+
+      if (configMap['models'] == null || configMap['models'] is! YamlList || configMap['models'].isEmpty) {
+        throw Exception('❌ No models configuration found in yaml_to_dart.yaml');
+        return;
+      }
+
+      final firstModelConfig = configMap['models'][0];
+      final outputPath = firstModelConfig['output'] ?? 'lib/models';
+
+      readYamlModels(outputPath);
+    }
   }
-
-  final configContent = configFile.readAsStringSync();
-  final configMap = loadYaml(configContent);
-
-  if (configMap['models'] == null || configMap['models'] is! YamlList || configMap['models'].isEmpty) {
-    log('❌ No models configuration found in flutter_data.yaml');
-    return;
-  }
-
-  final firstModelConfig = configMap['models'][0];
-  final outputPath = firstModelConfig['output'] ?? 'lib/models';
-
-  readYamlModels(outputPath);
 }
 
 void readYamlModels(String folderPath) {
   final files = findModelFiles(Directory.current.path);
   for (final file in files) {
+    print('Processing file: ${file.path}');
     final model = parseModelFile(file);
-    final dartCode = generateClass(model, folderPath);
-    final outFile = File('$folderPath/${model.className.toLowerCase()}.dart');
-    outFile.createSync(recursive: true);
-    outFile.writeAsStringSync(dartCode);
-    log('✅ Generated ${outFile.path}');
+    final dartCode = generateFile(model, folderPath);
+    final fileDart = File('$folderPath/${model.className.toLowerCase()}.dart');
+    fileDart.createSync(recursive: true);
+    fileDart.writeAsStringSync(dartCode);
+    '✅ Generated ${fileDart.path}'.log();
   }
 }
