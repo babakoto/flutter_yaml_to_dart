@@ -7,7 +7,7 @@ import 'from_map_generator.dart';
 import 'import_file_generator.dart';
 import 'tomap_generator.dart';
 
-String generateClass(ModelDefinition model, String folderPath) {
+String generateFile(ModelDefinition model, String folderPath) {
   final buffer = StringBuffer();
   bool isEquatable = model.equatable;
 

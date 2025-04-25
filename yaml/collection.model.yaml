@@ -3,7 +3,7 @@ fields:
   - id: String
   - title: String?
     default: ''
-  - counts: int
+  - counts: int?
     default: 0
   - product: Product
   - isActive: bool?

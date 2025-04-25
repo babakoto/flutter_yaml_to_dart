@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import '../model_parser.dart';
@@ -50,5 +49,5 @@ void enumGenerator(ModelDefinition model, String folderPath) {
   final outFile = File('$folderPath/${enumName.toLowerCase()}.dart');
   outFile.createSync(recursive: true);
   outFile.writeAsStringSync(code);
-  log('✅ Generated ${outFile.path}');
+  '✅ Generated ${outFile.path}'.log();
 }

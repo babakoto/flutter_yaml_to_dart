@@ -40,4 +40,8 @@ extension StringExtension on String {
       return toLowerCase(); // Cas "Object"
     }
   }
+
+  log() {
+    print(this);
+  }
 }
