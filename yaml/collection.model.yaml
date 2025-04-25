@@ -2,8 +2,16 @@ class: Collection
 fields:
   - id: String
   - title: String
+  - counts: int
+    default: 0
   - status: enum
     values: ['active_file', 'inactive_file', 'archived_file', 'deleted_file']
     key: "status_file"
   - createdAt: DateTime
     key: "created_at"
+
+
+
+toMap: true
+fromMap: true
+copyWith: true

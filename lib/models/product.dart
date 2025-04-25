@@ -13,12 +13,23 @@ class Product extends Equatable {
 
   const Product({
     required this.id,
-    this.price = 0.0,
+    required this.price,
     this.description,
     this.counts = const [],
     this.images = const [],
     this.createdAt,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'price': price,
+      'description': description,
+      'counts': counts,
+      'images': images,
+      'created_at': createdAt,
+    };
+  }
 
   factory Product.fromMap(Map<String, dynamic> json) {
     return Product(
@@ -40,4 +51,22 @@ class Product extends Equatable {
     images,
     createdAt,
   ];
+
+  Product copyWith({
+    String? id,
+    double? price,
+    String? description,
+    List<int>? counts,
+    List<String>? images,
+    DateTime? createdAt,
+  }) {
+    return Product(
+      id: id ?? this.id,
+      price: price ?? this.price,
+      description: description ?? this.description,
+      counts: counts ?? this.counts,
+      images: images ?? this.images,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
 }

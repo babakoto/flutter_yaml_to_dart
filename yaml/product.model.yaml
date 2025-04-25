@@ -2,10 +2,17 @@ class: Product
 fields:
   - id: String
   - price: double
-    default: 0.0
   - description: String?
   - counts: List<int>
   - images: List<String>
+    default: []
   - createdAt: DateTime?
     key: "created_at"
+
+
+toMap: true
+fromMap: true
+copyWith: true
+
+
 
