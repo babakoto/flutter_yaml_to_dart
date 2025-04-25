@@ -44,4 +44,6 @@ extension StringExtension on String {
   log() {
     print(this);
   }
+
+  toEnum() {}
 }

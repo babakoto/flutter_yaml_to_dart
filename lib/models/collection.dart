@@ -22,9 +22,10 @@ class Collection extends Equatable {
     required this.product,
     this.isActive = false,
     this.products = const [],
-    this.status = Status.inactiveFile,
+    required this.status,
     required this.createdAt,
   });
+
 
   Map<String, dynamic> toMap() {
     return {
@@ -47,7 +48,7 @@ class Collection extends Equatable {
       product: Product.fromMap(json['product']),
       isActive: json['isActive'] ?? false,
       products: json['products'] != null ? List<Product>.from(json['products'].map((x) => Product.fromMap)) : [],
-      status: json['status_file'] != null ? Status.fromMap(json['status_file']) : Status.inactiveFile,
+      status: Status.fromMap(json['status_file']),
       createdAt: DateTime.parse(json['created_at']),
     );
   }

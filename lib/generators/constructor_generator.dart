@@ -1,7 +1,8 @@
 import '../model_parser.dart';
 import '../utils.dart';
 
-void constructorGenerator(StringBuffer buffer, ModelDefinition model) {
+String constructorGenerator(ModelDefinition model) {
+  StringBuffer buffer = StringBuffer();
   if (model.constructor) {
     buffer.writeln('\n  const ${model.className}({');
     for (var field in model.fields) {
@@ -26,5 +27,8 @@ void constructorGenerator(StringBuffer buffer, ModelDefinition model) {
       }
     }
     buffer.writeln('  });');
+    return buffer.toString();
+  } else {
+    return '';
   }
 }

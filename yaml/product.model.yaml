@@ -1,7 +1,7 @@
 class: Product
 fields:
   - id: String
-  - price: double
+  - price: double?
   - description: String?
   - counts: List<int>
   - images: List<String>

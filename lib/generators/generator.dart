@@ -1,8 +1,8 @@
 import '../model_parser.dart';
-import '../utils.dart';
 import 'constructor_generator.dart';
 import 'copy_with_generator.dart';
 import 'equatable_generator.dart';
+import 'fields_generator.dart';
 import 'from_map_generator.dart';
 import 'import_file_generator.dart';
 import 'tomap_generator.dart';
@@ -25,17 +25,11 @@ String generateFile(ModelDefinition model, String folderPath) {
 
   buffer.writeln('class ${model.className} ${isEquatable ? "extends Equatable {" : "{"}');
 
-  /// generate fields
-  for (var field in model.fields) {
-    if (field.isEnum) {
-      buffer.writeln('  final ${field.name.capitalize()} ${field.name};');
-    } else {
-      buffer.writeln('  final ${field.type} ${field.name};');
-    }
-  }
+  /// Generate fields
+  fieldsGenerator(buffer, model);
 
   /// generate constructor
-  constructorGenerator(buffer, model);
+  buffer.writeln(constructorGenerator(model));
 
   /// Generate toMap method
   toMapGenerator(buffer, model);

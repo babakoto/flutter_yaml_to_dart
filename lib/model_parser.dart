@@ -65,7 +65,7 @@ class ModelField {
         }
       case 'enum':
         if (type.contains('?')) {
-          return "json['${jsonKey ?? name}'] != null ? ${name.capitalize()}.fromMap(json['${jsonKey ?? name}']) : ${name.capitalize()}.${defaultValue?.toVariableCamelCase()},";
+          return "json['${jsonKey ?? name}'] != null ? ${name.capitalize()}.fromMap(json['${jsonKey ?? name}']) : ${defaultValue != null ? '${name.capitalize()}.${defaultValue?.toVariableCamelCase()}' : null},";
         } else {
           return "${name.capitalize()}.fromMap(json['${jsonKey ?? name}']),";
         }
