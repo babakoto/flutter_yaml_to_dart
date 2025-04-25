@@ -26,7 +26,6 @@ class Collection extends Equatable {
     required this.createdAt,
   });
 
-
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -54,16 +53,7 @@ class Collection extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-    id,
-    title,
-    counts,
-    product,
-    isActive,
-    products,
-    status,
-    createdAt,
-  ];
+  List<Object?> get props => [id, title, counts, product, isActive, products, status, createdAt];
 
   Collection copyWith({
     String? id,

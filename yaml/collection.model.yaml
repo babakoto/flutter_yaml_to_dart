@@ -7,12 +7,11 @@ fields:
     default: 0
   - product: Product
   - isActive: bool?
-    default: false
   - products: List<Product>
   - status: enum
     values: ['active_file', 'inactive_file', 'archived_file', 'deleted_file']
     key: "status_file"
-    #default: inactive_file
+    default: inactive_file
   - createdAt: DateTime
     key: "created_at"
 
