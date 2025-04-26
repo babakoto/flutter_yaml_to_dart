@@ -1,5 +1,5 @@
 # 🧙‍♂️ YAML to Dart
-<p align="center"> <img src="https://github.com/babakoto/flutter_yaml_to_dart/blob/main/assets/demo.png?raw=true" alt="Description de l'image" width="400"/></p>
+<p align="center"> <img src="https://github.com/babakoto/flutter_yaml_to_dart/blob/main/assets/demo.png?raw=true" alt="Description de l'image"/></p>
 
 ## Overview
 
