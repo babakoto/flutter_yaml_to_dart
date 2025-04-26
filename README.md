@@ -223,12 +223,13 @@ To indicate that a variable might have the value `null`, just add `?` to its typ
         default: 0
 ⚠️ The default value must match the defined type, just like in the Dart language.
 | type | default
-|--|--|--|
+|--|--|
 | int | `0` |
 | double | `0.0` |
 | String | `'product'` |
 | bool | `false` or `true` |
 | List\<String> | `"['Madagascar', 'France', 'USA']"` or `[]` |
+| List\<Map<String,dynamic>> | `"[{'key': 'value'}]"` or `{}` |
 | List\<int> | `[1,2,3]` or `[ ]` |
 | DateTime | `DateTime.now()` |
 
