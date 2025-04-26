@@ -9,19 +9,10 @@ class Collection extends Equatable {
   final List<Product> products;
   final DateTime createdAt;
 
-  const Collection({
-    required this.name,
-    this.products = const [],
-    required this.createdAt,
-  });
-
+  const Collection({required this.name, this.products = const [], required this.createdAt});
 
   Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'products': products,
-      'created_at': createdAt,
-    };
+    return {'name': name, 'products': products, 'created_at': createdAt};
   }
 
   factory Collection.fromMap(Map<String, dynamic> json) {
@@ -33,17 +24,9 @@ class Collection extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-    name,
-    products,
-    createdAt,
-  ];
+  List<Object?> get props => [name, products, createdAt];
 
-  Collection copyWith({
-    String? name,
-    List<Product>? products,
-    DateTime? createdAt,
-  }) {
+  Collection copyWith({String? name, List<Product>? products, DateTime? createdAt}) {
     return Collection(
       name: name ?? this.name,
       products: products ?? this.products,
