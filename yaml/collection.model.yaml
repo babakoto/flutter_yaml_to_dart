@@ -2,7 +2,6 @@
 class: Collection
 fields:
   - name: String
-  - counts: int?
   - products: List<Product>
   - createdAt: DateTime
     key: "created_at"

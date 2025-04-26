@@ -18,3 +18,7 @@ dependencies:
 dev_dependencies:
   lints: ^5.1.1
   test: ^1.25.15
+
+screenshots:
+  - description: flutter yaml to dart package logo.
+    path: assets/logo.png
