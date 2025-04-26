@@ -1,22 +1,33 @@
+
 class: Collection
 fields:
-  - id: String
-  - title: String?
-    default: ''
-  - counts: int?
-    default: 0
+  - name: String
+  - counts: int
+  - price: double
   - product: Product
-  - isActive: bool?
   - products: List<Product>
-  - status: enum
-    values: ['active_file', 'inactive_file', 'archived_file', 'deleted_file']
-    key: "status_file"
-    default: inactive_file
+  - images: List<String>
+  - isAvailable: bool
   - createdAt: DateTime
-    key: "created_at"
-
-
 
 toMap: true
 fromMap: true
 copyWith: true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

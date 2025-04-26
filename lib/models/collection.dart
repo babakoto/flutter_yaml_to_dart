@@ -3,76 +3,85 @@
 import 'package:equatable/equatable.dart';
 
 import 'product.dart';
-import 'status.dart';
 
 class Collection extends Equatable {
-  final String id;
-  final String? title;
-  final int? counts;
+  final String name;
+  final int counts;
+  final double price;
   final Product product;
-  final bool? isActive;
   final List<Product> products;
-  final Status status;
+  final List<String> images;
+  final bool isAvailable;
   final DateTime createdAt;
 
   const Collection({
-    required this.id,
-    this.title = '',
-    this.counts = 0,
+    required this.name,
+    required this.counts,
+    required this.price,
     required this.product,
-    this.isActive = false,
     this.products = const [],
-    required this.status,
+    this.images = const [],
+    required this.isAvailable,
     required this.createdAt,
   });
 
+
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'title': title,
+      'name': name,
       'counts': counts,
+      'price': price,
       'product': product,
-      'isActive': isActive,
       'products': products,
-      'status_file': status,
-      'created_at': createdAt,
+      'images': images,
+      'isAvailable': isAvailable,
+      'createdAt': createdAt,
     };
   }
 
   factory Collection.fromMap(Map<String, dynamic> json) {
     return Collection(
-      id: json['id'],
-      title: json['title'],
-      counts: json['counts'] != null ? int.parse(json['counts']) : 0,
+      name: json['name'] as String,
+      counts: json['counts'] as int,
+      price: json['price'] as double,
       product: Product.fromMap(json['product']),
-      isActive: json['isActive'] ?? false,
-      products: json['products'] != null ? List<Product>.from(json['products'].map((x) => Product.fromMap)) : [],
-      status: Status.fromMap(json['status_file']),
-      createdAt: DateTime.parse(json['created_at']),
+      products: json['products'] != null ? List.from(json['products'].map((x) => Product.fromMap)) : [],
+      images: json['images'] != null ? List<String>.from(json['images']) : [],
+      isAvailable: json['isAvailable'] as bool,
+      createdAt: DateTime.parse(json['createdAt']),
     );
   }
 
   @override
-  List<Object?> get props => [id, title, counts, product, isActive, products, status, createdAt];
+  List<Object?> get props => [
+    name,
+    counts,
+    price,
+    product,
+    products,
+    images,
+    isAvailable,
+    createdAt,
+  ];
 
   Collection copyWith({
-    String? id,
-    String? title,
+    String? name,
     int? counts,
+    double? price,
     Product? product,
-    bool? isActive,
     List<Product>? products,
-    Status? status,
+    List<String>? images,
+    bool? isAvailable,
     DateTime? createdAt,
   }) {
     return Collection(
-      id: id ?? this.id,
-      title: title ?? this.title,
+      name: name ?? this.name,
       counts: counts ?? this.counts,
+      price: price ?? this.price,
       product: product ?? this.product,
-      isActive: isActive ?? this.isActive,
       products: products ?? this.products,
-      status: status ?? this.status,
+      images: images ?? this.images,
+      isAvailable: isAvailable ?? this.isAvailable,
       createdAt: createdAt ?? this.createdAt,
     );
   }

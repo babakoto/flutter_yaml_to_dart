@@ -14,15 +14,19 @@ extension StringExtension on String {
   }
 
   String toVariableCamelCase() {
-    return replaceAllMapped(RegExp('(_[a-z])'), (match) {
-      return match.group(0)!.replaceFirst('_', '').toUpperCase();
+    return trim().replaceAllMapped(RegExp(r'([-_\s]+[a-zA-Z])'), (match) {
+      String matchStr = match.group(0)!;
+      return matchStr.substring(matchStr.length - 1).toUpperCase();
     });
   }
 
   String toClassCamelCase() {
-    return replaceAllMapped(RegExp('(_[a-z])'), (match) {
-      return match.group(0)!.replaceFirst('_', '').toUpperCase();
-    }).capitalize();
+    String result = trim().replaceAllMapped(RegExp(r'([-_\s]+[a-zA-Z])'), (match) {
+      String matchStr = match.group(0)!;
+      return matchStr.substring(matchStr.length - 1).toUpperCase();
+    });
+
+    return result.capitalize();
   }
 
   /// Extracts the type from a string.

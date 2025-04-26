@@ -1,12 +1,22 @@
 class: Product
 fields:
   - id: String
-  - price: double?
+  - price: double
+  - name: String?
+  - isAvailable: bool
+  - images: List<String>
+    default: "['madagascar','paris','newyork']"
+  - max: int?
+    default: 0
+  - status: enum?
+    values: ["active-file", "inactive"]
+    default: "active-file"
+
   - description: String?
   - counts: List<int>
-  - images: List<String>
-    default: []
+    default: [1,2,3]
   - createdAt: DateTime?
+    default: DateTime.now()
     key: "created_at"
 
 

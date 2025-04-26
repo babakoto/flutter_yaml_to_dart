@@ -7,7 +7,7 @@ String constructorGenerator(ModelDefinition model) {
     buffer.writeln('\n  const ${model.className}({');
     for (var field in model.fields) {
       if (field.isArray()) {
-        buffer.writeln('    this.${field.name} = const [],');
+        buffer.writeln('    this.${field.name} = const ${field.defaultValue ?? []},');
       } else {
         if (field.isOptional || field.hasDefaultValue()) {
           if (field.hasDefaultValue()) {
@@ -16,10 +16,20 @@ String constructorGenerator(ModelDefinition model) {
                 '    this.${field.name} = ${field.name.capitalize()}.${field.defaultValue!.toVariableCamelCase()},',
               );
             } else {
-              buffer.writeln('    this.${field.name} = ${field.defaultValue!.isEmpty ? "''" : field.defaultValue},');
+              switch (field.getType()) {
+                case 'String':
+                  buffer.writeln(
+                    "    this.${field.name} = ${field.defaultValue!.isEmpty ? "''" : "'${field.defaultValue}'"},",
+                  );
+                case 'DateTime':
+                  buffer.writeln("    ${!field.isOptional ? 'required' : ''} this.${field.name},");
+
+                default:
+                  buffer.writeln('    this.${field.name} = ${field.defaultValue},');
+              }
             }
           } else {
-            buffer.writeln('    this.${field.name},');
+            buffer.writeln('   this.${field.name},');
           }
         } else {
           buffer.writeln('    required this.${field.name},');

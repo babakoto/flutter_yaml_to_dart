@@ -45,7 +45,7 @@ class ModelField {
     }
 
     if (isListOfObjects()) {
-      return "json['${jsonKey ?? name}'] != null ? ${getType()}.from(json['${jsonKey ?? name}'].map((x) => ${getTypeOfList()}.fromMap)) : [],";
+      return "json['${jsonKey ?? name}'] != null ? List.from(json['${jsonKey ?? name}'].map((x) => ${getTypeOfList()}.fromMap)) : [],";
     }
 
     if (isObject()) {
@@ -57,34 +57,17 @@ class ModelField {
     }
 
     switch (getType()) {
-      case 'int':
-        if (type.contains('?')) {
-          return "json['${jsonKey ?? name}'] != null ? int.parse(json['${jsonKey ?? name}']) : $defaultValue,";
+      case 'double' || 'String' || 'int' || 'bool':
+        if (defaultValue != null) {
+          return "json['${jsonKey ?? name}'] as $type ?? $defaultValue,";
         } else {
-          return "int.parse(json['${jsonKey ?? name}']),";
+          return "json['${jsonKey ?? name}'] as $type,";
         }
       case 'enum':
         if (type.contains('?')) {
           return "json['${jsonKey ?? name}'] != null ? ${name.capitalize()}.fromMap(json['${jsonKey ?? name}']) : ${defaultValue != null ? '${name.capitalize()}.${defaultValue?.toVariableCamelCase()}' : null},";
         } else {
           return "${name.capitalize()}.fromMap(json['${jsonKey ?? name}']),";
-        }
-
-      case 'double':
-        if (type.contains('?')) {
-          return "json['${jsonKey ?? name}'] != null ? double.parse(json['${jsonKey ?? name}']) : $defaultValue,";
-        } else {
-          return "double.parse(json['${jsonKey ?? name}']),";
-        }
-
-      case 'String':
-        return "json['${jsonKey ?? name}'],";
-
-      case 'bool':
-        if (type.contains('?')) {
-          return "json['${jsonKey ?? name}'] ?? $defaultValue,";
-        } else {
-          return "json['${jsonKey ?? name}'],";
         }
       case 'DateTime':
         if (type.contains('?')) {
