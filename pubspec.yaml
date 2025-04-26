@@ -1,6 +1,6 @@
 name: flutter_yaml_to_dart
 description: Convert YAML file into Dart model automatically
-version: 0.0.5
+version: 0.0.6
 homepage: https://github.com/babakoto/flutter_yaml_to_dart
 # repository: https://github.com/my_org/my_repo
 
