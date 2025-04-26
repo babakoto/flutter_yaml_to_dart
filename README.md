@@ -1,5 +1,5 @@
 # 🧙‍♂️ YAML to Dart
-![demo](https://github.com/babakoto/flutter_yaml_to_dart/blob/main/assets/demo.png)
+![demo](./assets/demo.png)
 
 ## Overview
 
