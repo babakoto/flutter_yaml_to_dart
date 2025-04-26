@@ -45,7 +45,7 @@ class ModelField {
     }
 
     if (isListOfObjects()) {
-      return "json['${jsonKey ?? name}'] != null ? List.from(json['${jsonKey ?? name}'].map((x) => ${getTypeOfList()}.fromMap)) : [],";
+      return "json['${jsonKey ?? name}'] != null ? ${getType()}.from(json['${jsonKey ?? name}'].map((x) => ${getTypeOfList()}.fromMap(x))) : [],";
     }
 
     if (isObject()) {

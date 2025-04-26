@@ -2,13 +2,10 @@
 class: Collection
 fields:
   - name: String
-  - counts: int
-  - price: double
-  - product: Product
+  - counts: int?
   - products: List<Product>
-  - images: List<String>
-  - isAvailable: bool
   - createdAt: DateTime
+    key: "created_at"
 
 toMap: true
 fromMap: true

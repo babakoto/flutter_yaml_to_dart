@@ -3,7 +3,7 @@ fields:
   - id: String
   - price: double
   - name: String?
-  - isAvailable: bool
+  - isAvailable: bool?
   - images: List<String>
     default: "['madagascar','paris','newyork']"
   - max: int?

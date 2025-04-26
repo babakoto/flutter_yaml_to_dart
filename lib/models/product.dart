@@ -8,7 +8,7 @@ class Product extends Equatable {
   final String id;
   final double price;
   final String? name;
-  final bool isAvailable;
+  final bool? isAvailable;
   final List<String> images;
   final int? max;
   final Status? status;
@@ -20,7 +20,7 @@ class Product extends Equatable {
     required this.id,
     required this.price,
    this.name,
-    required this.isAvailable,
+   this.isAvailable,
     this.images = const ['madagascar','paris','newyork'],
     this.max = 0,
     this.status = Status.activeFile,
@@ -50,7 +50,7 @@ class Product extends Equatable {
       id: json['id'] as String,
       price: json['price'] as double,
       name: json['name'] as String?,
-      isAvailable: json['isAvailable'] as bool,
+      isAvailable: json['isAvailable'] as bool?,
       images: json['images'] != null ? List<String>.from(json['images']) : [],
       max: json['max'] as int? ?? 0,
       status: json['status'] != null ? Status.fromMap(json['status']) : Status.activeFile,
