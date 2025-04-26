@@ -152,7 +152,7 @@ You can change the output directory in the `yaml_to_dart.yaml` file (see Step 2)
           counts: json['counts'] as int,  
           price: json['price'] as double,  
           product: Product.fromMap(json['product']),  
-          products: json['products'] != null ? List<Product>.from(json['products'].map((x) => Product.fromMap)) : [],  
+          products: json['products'] != null ? List<Product>.from(json['products'].map((x) => Product.fromMap(x))) : [],  
           images: json['images'] != null ? List<String>.from(json['images']) : [],  
           isAvailable: json['isAvailable'] as bool,  
           createdAt: DateTime.parse(json['createdAt']),  
