@@ -1,9 +1,13 @@
 import 'package:flutter_yaml_to_dart/models/collection.dart';
 
 void main() {
-  final data = {
+  final collectionMap = {
     'id': '123',
     'name': 'John Doe',
+    'data': [
+      {'key1': 'value1'},
+      {'key2': 'value2'},
+    ],
     'products': [
       {
         'id': '1',
@@ -30,6 +34,6 @@ void main() {
     'created_at': '2023-10-01T12:00:00Z',
   };
 
-  final collection = Collection.fromMap(data);
-  print('Collection ID: ${collection.products.length}');
+  final collection = Collection.fromMap(collectionMap);
+  print('Collection ID: ${collection.data}');
 }

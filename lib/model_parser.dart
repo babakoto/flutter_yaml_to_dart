@@ -39,7 +39,22 @@ class ModelField {
     return getType();
   }
 
+  bool get isMap => type.contains('Map') && !type.contains('List');
+
+  bool get isMapList => type.contains('List') && type.contains('Map');
+
   String typeConvert() {
+    if (isMap) {
+      if (isOptional) {
+        return "json['${jsonKey ?? name}'] != null ? Map<String, dynamic>.from(json['${jsonKey ?? name}']) : $defaultValue,";
+      }
+      return "$type.from(json['${jsonKey ?? name}']),";
+    }
+
+    if (isMapList) {
+      return "json['${jsonKey ?? name}'] != null ? $type.from(json['${jsonKey ?? name}']) : [],";
+    }
+
     if (isListOfPrimitives()) {
       return "json['${jsonKey ?? name}'] != null ? ${getType()}.from(json['${jsonKey ?? name}']) : [],";
     }
@@ -101,7 +116,8 @@ class ModelField {
         getType() == 'String' ||
         getType() == 'bool' ||
         getType() == 'DateTime' ||
-        getType() == 'enum';
+        getType() == 'enum' ||
+        getType().contains('Map');
   }
 
   bool isObjectOrListOfObject() {

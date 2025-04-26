@@ -3,6 +3,8 @@ class: Collection
 fields:
   - name: String
   - products: List<Product>
+  - data: Map<String, dynamic>
+
   - createdAt: DateTime
     key: "created_at"
 

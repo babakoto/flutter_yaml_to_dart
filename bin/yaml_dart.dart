@@ -47,7 +47,6 @@ void main(List<String> arguments) {
 void readYamlModels(String folderPath) {
   final files = findModelFiles(Directory.current.path);
   for (final file in files) {
-    print('Processing file: ${file.path}');
     final model = parseModelFile(file);
     final dartCode = generateFile(model, folderPath);
     final fileDart = File('$folderPath/${model.className.toLowerCase()}.dart');
